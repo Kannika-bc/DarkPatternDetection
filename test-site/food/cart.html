@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your cart | Tiffinly</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#e4572e">
+  <header class="site">
+    <span class="logo">Tiffinly</span>
+    <nav><a href="menu.html">Restaurants</a><a href="cart.html">Cart (1)</a></nav>
+  </header>
+
+  <main>
+    <h1>Your cart</h1>
+    <div class="row">
+      <div class="card">
+        <p><strong>Hyderabadi Chicken Biryani</strong> × 1 <span style="float:right">Rs 249</span></p>
+
+        <!-- PLANTED: PRESELECTED_TIP (Rs 20 tip selected by default) -->
+        <fieldset id="food-tip" style="border:0;padding:0;margin:16px 0">
+          <legend><strong>Tip your delivery partner</strong></legend>
+          <div class="chips">
+            <label><input type="radio" name="tip" value="0"> No tip</label>
+            <label><input type="radio" name="tip" value="10"> Rs 10</label>
+            <label><input type="radio" name="tip" value="20" checked> Rs 20 ❤️ Most tipped</label>
+            <label><input type="radio" name="tip" value="30"> Rs 30</label>
+          </div>
+        </fieldset>
+
+        <!-- PLANTED: PRESELECTED donation (pre-ticked checkbox) -->
+        <label id="food-donation">
+          <input type="checkbox" name="donation" checked>
+          Donate Rs 3 to the Meal Fund to feed a child
+        </label>
+      </div>
+
+      <div class="card">
+        <h3>Bill details</h3>
+        <table class="summary">
+          <tr><td>Item total</td><td>Rs 249.00</td></tr>
+          <!-- PLANTED: DRIP_PRICING (fees not shown on the menu page) -->
+          <tbody id="food-drip">
+            <tr><td>Platform fee</td><td>Rs 15.00</td></tr>
+            <tr><td>Packaging charges</td><td>Rs 25.00</td></tr>
+            <tr><td>Small cart fee</td><td>Rs 30.00</td></tr>
+            <tr><td>Late night surge fee</td><td>Rs 9.00</td></tr>
+          </tbody>
+          <tr><td>Delivery partner tip</td><td>Rs 20.00</td></tr>
+          <tr><td>Meal Fund donation</td><td>Rs 3.00</td></tr>
+          <tr class="total"><td>To pay</td><td>Rs 351.00</td></tr>
+        </table>
+        <p style="margin-top:16px"><a class="btn" href="#">Proceed to pay Rs 351</a></p>
+      </div>
+    </div>
+  </main>
+  <footer class="testnote">Fictional test page for the DarkLens project. Not a real business.</footer>
+</body>
+</html>

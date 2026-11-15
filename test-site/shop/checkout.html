@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout | Kartiq</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#2f5bea">
+  <header class="site">
+    <span class="logo">Kartiq</span>
+    <nav><a href="cart.html">Back to cart</a></nav>
+  </header>
+
+  <main>
+    <h1>Checkout</h1>
+    <div class="row">
+      <form class="card" onsubmit="return false">
+        <h3>Delivery address</h3>
+        <!-- PRIVACY TEST: pre-filled personal data. DarkLens must never read input values. -->
+        <p><label>Full name<br><input name="name" value="Test User" autocomplete="off"></label></p>
+        <p><label>Phone<br><input name="phone" value="9999999999" autocomplete="off"></label></p>
+        <p><label>PIN code<br><input name="pin" value="560001" autocomplete="off"></label></p>
+
+        <!-- PLANTED: PRECHECKED_OPTIN -->
+        <p id="shop-optin">
+          <label><input type="checkbox" name="marketing" checked>
+            Send me exclusive deals and offers on WhatsApp, SMS and email</label>
+        </p>
+        <p class="muted">You will choose a payment method on the next step.</p>
+      </form>
+
+      <div class="card">
+        <h3>Order summary</h3>
+        <table class="summary">
+          <tr><td>Items (2)</td><td>₹2,098</td></tr>
+          <tr><td>Delivery</td><td>FREE</td></tr>
+          <!-- PLANTED: DRIP_PRICING (fees appear only at checkout) -->
+          <tbody id="shop-drip">
+            <tr><td>Handling fee</td><td>₹99</td></tr>
+            <tr><td>Secure transaction fee</td><td>₹49</td></tr>
+          </tbody>
+          <tr class="total"><td>Order total</td><td>₹2,246</td></tr>
+        </table>
+        <p><a class="btn" href="#">Continue to payment</a></p>
+      </div>
+    </div>
+  </main>
+  <footer class="testnote">Fictional test page for the DarkLens project. Not a real business.</footer>
+</body>
+</html>

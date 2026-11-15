@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Account & membership | StreamBox</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#7c3aed">
+  <header class="site">
+    <span class="logo">StreamBox</span>
+    <nav><a href="plans.html">Plans</a><a href="account.html">Account</a></nav>
+  </header>
+
+  <main>
+    <h1>Account &amp; membership</h1>
+    <div class="card">
+      <h3>Premium plan · ₹649/month</h3>
+      <p>Next billing date: 1 January</p>
+      <p>
+        <a class="btn" href="plans.html">Upgrade plan</a>
+        <a class="btn secondary" href="#">Add a profile</a>
+        <a class="btn secondary" href="#">Change payment method</a>
+      </p>
+    </div>
+
+    <!-- PLANTED: CONFIRM_SHAMING (retention prompt) -->
+    <div class="card" style="text-align:center">
+      <h3>Thinking of leaving? 😢</h3>
+      <p>You'll lose your watch history, downloads and personalised picks.</p>
+      <p><button class="btn huge">Keep my membership</button></p>
+      <button class="btn secondary" id="ott-confirmshame">Cancel anyway, I don't care about my favourite shows</button>
+    </div>
+
+    <div class="card">
+      <h3>Help</h3>
+      <p class="muted">Viewing activity · Parental controls · Devices · Language</p>
+    </div>
+  </main>
+
+  <!-- PLANTED: SUBSCRIPTION_TRAP (cancel only by phone, in a narrow window, in tiny text) -->
+  <footer class="testnote">
+    <p id="ott-subtrap" class="tiny">To end your membership, please call our support line on 1800-000-0000
+      between 10:00 and 11:00 AM, Monday to Friday. Memberships cannot be cancelled online.</p>
+    Fictional test page for the DarkLens project. Not a real business.
+  </footer>
+</body>
+</html>

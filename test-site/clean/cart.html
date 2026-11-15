@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your cart | FairMart</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#15803d">
+  <header class="site">
+    <span class="logo">FairMart</span>
+    <nav><a href="product.html">Electronics</a><a href="cart.html">Cart (1)</a></nav>
+  </header>
+
+  <main>
+    <h1>Your cart</h1>
+    <div class="row">
+      <div class="card">
+        <!-- Same price as the product page (₹1,499) -->
+        <p><strong>Boltwave X2 Wireless Earbuds</strong> × 1 <span style="float:right">₹1,499</span></p>
+
+        <!-- HARD NEGATIVE: tip/donation offered but nothing pre-selected -->
+        <fieldset id="clean-donation" style="border:0;padding:0;margin:16px 0">
+          <legend>Round up for the Clean Rivers fund? (optional)</legend>
+          <label><input type="radio" name="donate" value="1"> ₹1</label>
+          <label><input type="radio" name="donate" value="5"> ₹5</label>
+          <label><input type="radio" name="donate" value="10"> ₹10</label>
+        </fieldset>
+
+        <!-- HARD NEGATIVE: unchecked add-on -->
+        <p id="clean-warranty"><label><input type="checkbox" name="warranty">
+          Add 1-year extended warranty (₹299)</label></p>
+      </div>
+
+      <div class="card">
+        <h3>Order summary</h3>
+        <table class="summary">
+          <tr><td>Item total</td><td>₹1,499</td></tr>
+          <!-- HARD NEGATIVE: the same delivery fee that was disclosed on the product page -->
+          <tr id="clean-fee"><td>Delivery fee</td><td>₹40</td></tr>
+          <tr class="total"><td>Total</td><td>₹1,539</td></tr>
+        </table>
+        <p><a class="btn" href="#">Continue to payment</a></p>
+      </div>
+    </div>
+  </main>
+  <footer class="testnote">Fictional test page for the DarkLens project. Not a real business.</footer>
+</body>
+</html>

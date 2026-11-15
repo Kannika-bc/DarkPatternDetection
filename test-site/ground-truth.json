@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "description": "Planted dark patterns in the DarkLens test site. Used by the M8 evaluation script. Detectors must NEVER read these ids or this file.",
+  "fields": {
+    "selector": "CSS selector of the planted element (or its container), relative to the document given by 'context'",
+    "context": "'main' = top document; {'iframe': path} = inside that same-origin iframe; {'shadowHost': selector} = inside that element's open shadow root",
+    "phase": "Earliest phase whose detectors are expected to find it (MVP or V2)",
+    "evidence": "text = wording only; dom = element state/style; behaviour = changes over time or on reload; cross-page = needs memory of an earlier page",
+    "expectedStatus": "Best achievable status: 'unverified' for claims we cannot check, 'confirmed' for observable facts (DOM state, reload behaviour, cross-page change)",
+    "alsoAccept": "Other pattern types that also count as a correct detection for this element",
+    "appearsAfterMs": "Element is added or shown only after this delay (tests MutationObserver / rescans)"
+  },
+  "ccpaRefs": {
+    "FALSE_URGENCY": 1, "BASKET_SNEAKING": 2, "CONFIRM_SHAMING": 3, "FORCED_ACTION": 4,
+    "SUBSCRIPTION_TRAP": 5, "INTERFACE_INTERFERENCE": 6, "BAIT_AND_SWITCH": 7, "DRIP_PRICING": 8,
+    "DISGUISED_AD": 9, "NAGGING": 10, "TRICK_QUESTION": 11, "SAAS_BILLING": 12,
+    "PRECHECKED_OPTIN": null, "PRESELECTED_TIP": null, "FAKE_SOCIAL_PROOF": null, "FAKE_SCARCITY": null,
+    "FAKE_DISCOUNT": null, "COOKIE_WALL": null, "AUTO_RENEW": null
+  },
+  "pages": [
+    {
+      "path": "food/menu.html", "category": "food", "pageType": "product",
+      "findings": [
+        { "id": "food-urgency", "type": "FALSE_URGENCY", "ccpaRef": 1, "selector": "#food-urgency", "context": "main", "phase": "MVP", "evidence": "text", "expectedStatus": "unverified" },
+        { "id": "food-social", "type": "FAKE_SOCIAL_PROOF", "ccpaRef": null, "selector": "#food-social", "context": "main", "phase": "MVP", "evidence": "text", "expectedStatus": "unverified" },
+        { "id": "food-scarcity", "type": "FAKE_SCARCITY", "ccpaRef": null, "selector": "#food-scarcity", "context": "main", "phase": "MVP", "evidence": "text", "expectedStatus": "unverified", "appearsAfterMs": 2000, "notes": "Injected by JS after the SPA tab renders" },
+        { "id": "food-forced", "type": "FORCED_ACTION", "ccpaRef": 4, "selector": "#food-forced", "context": "main", "phase": "MVP", "evidence": "text", "expectedStatus": "confirmed" },
+        { "id": "food-nag", "type": "NAGGING", "ccpaRef": 10, "selector": "#food-nag", "context": "main", "phase": "V2", "evidence": "behaviour", "expectedStatus": "confirmed", "appearsAfterMs": 5000, "notes": "Reappears 20 s after every close" }
+      ]
+    },
+    {
+      "path": "food/cart.html", "category": "food", "pageType": "cart",
+      "findings": [
+        { "id": "food-tip", "type": "PRESELECTED_TIP", "ccpaRef": null, "selector": "#food-tip", "context": "main", "phase": "MVP", "evidence": "dom", "expectedStatus": "confirmed" },
+        { "id": "food-donation", "type": "PRESELECTED_TIP", "ccpaRef": null, "selector": "#food-donation", "context": "main", "phase": "MVP", "evidence": "dom", "expectedStatus": "confirmed", "alsoAccept": ["PRECHECKED_OPTIN", "BASKET_SNEAKING"] },
+        { "id": "food-drip", "type": "DRIP_PRICING", "ccpaRef": 8, "selector": "#food-drip", "context": "main", "phase": "V2", "evidence": "cross-page", "expectedStatus": "confirmed", "notes": "Menu shows Rs 249; cart total is Rs 351 after four fees" }
+      ]
+    },
+    {
+      "path": "shop/product.html", "category": "shop", "pageType": "product",
+      "findings": [
+        { "id": "shop-discount", "type": "FAKE_DISCOUNT", "ccpaRef": null, "selector": "#shop-discount", "context": "main", "phase": "V2", "evidence": "text", "expectedStatus": "unverified", "notes": "MRP ₹14,999 vs ₹1,499 (90% off)" },
+        { "id": "shop-urgency", "type": "FALSE_URGENCY", "ccpaRef": 1, "selector": "#shop-urgency", "context": "main", "phase": "MVP", "evidence": "behaviour", "expectedStatus": "confirmed", "notes": "Countdown restarts at 15:00 on every reload; MVP finds it as unverified, V2 reset check confirms it" },
+        { "id": "shop-scarcity", "type": "FAKE_SCARCITY", "ccpaRef": null, "selector": "#shop-scarcity", "context": "main", "phase": "MVP", "evidence": "text", "expectedStatus": "unverified" },
+        { "id": "shop-social", "type": "FAKE_SOCIAL_PROOF", "ccpaRef": null, "selector": "#shop-social", "context": "main", "phase": "MVP", "evidence": "text", "expectedStatus": "unverified", "notes": "Number is random on every load" },
+        { "id": "shop-shadow-scarcity", "type": "FAKE_SCARCITY", "ccpaRef": null, "selector": "#shop-shadow-scarcity", "context": { "shadowHost": "#shop-recommendations" }, "phase": "MVP", "evidence": "text", "expectedStatus": "unverified" },
+        { "id": "shop-confirmshame", "type": "CONFIRM_SHAMING", "ccpaRef": 3, "selector": "#shop-confirmshame", "context": "main", "phase": "MVP", "evidence": "text", "expectedStatus": "unverified", "appearsAfterMs": 3000 }
+      ]
+    },
+    {
+      "path": "shop/cart.html", "category": "shop", "pageType": "cart",
+      "findings": [
+        { "id": "shop-bait", "type": "BAIT_AND_SWITCH", "ccpaRef": 7, "selector": "#shop-bait", "context": "main", "phase": "V2", "evidence": "cross-page", "expectedStatus": "confirmed", "notes": "Product page price ₹1,499, cart price ₹1,799" },
+        { "id": "shop-sneak", "type": "BASKET_SNEAKING", "ccpaRef": 2, "selector": "#shop-sneak", "context": "main", "phase": "V2", "evidence": "text", "expectedStatus": "unverified" }
+      ]
+    },
+    {
+      "path": "shop/checkout.html", "category": "shop", "pageType": "checkout",
+      "findings": [
+        { "id": "shop-optin", "type": "PRECHECKED_OPTIN", "ccpaRef": null, "selector": "#shop-optin", "context": "main", "phase": "MVP", "evidence": "dom", "expectedStatus": "confirmed" },
+        { "id": "shop-drip", "type": "DRIP_PRICING", "ccpaRef": 8, "selector": "#shop-drip", "context": "main", "phase": "V2", "evidence": "cross-page", "expectedStatus": "confirmed" }
+      ]
+    },
+    {
+      "path": "travel/flights.html", "category": "travel", "pageType": "product",
+      "findings": [
+        { "id": "travel-urgency", "type": "FALSE_URGENCY", "ccpaRef": 1, "selector": "#travel-urgency", "context": "main", "phase": "MVP", "evidence": "behaviour", "expectedStatus": "confirmed", "notes": "Countdown restarts at 10:00 on every reload" },
+        { "id": "travel-scarcity", "type": "FAKE_SCARCITY", "ccpaRef": null, "selector": "#travel-scarcity", "context": "main", "phase": "MVP", "evidence": "text", "expectedStatus": "unverified" },
+        { "id": "travel-social", "type": "FAKE_SOCIAL_PROOF", "ccpaRef": null, "selector": "#travel-social", "context": "main", "phase": "MVP", "evidence": "text", "expectedStatus": "unverified" },
+        { "id": "travel-cookie", "type": "COOKIE_WALL", "ccpaRef": null, "selector": "#travel-cookie", "context": "main", "phase": "V2", "evidence": "dom", "expectedStatus": "confirmed", "alsoAccept": ["INTERFACE_INTERFERENCE"], "notes": "No reject button at all" }
+      ]
+    },
+    {
+      "path": "travel/booking.html", "category": "travel", "pageType": "checkout",
+      "findings": [
+        { "id": "travel-interference", "type": "INTERFACE_INTERFERENCE", "ccpaRef": 6, "selector": "#travel-interference", "context": "main", "phase": "V2", "evidence": "dom", "expectedStatus": "confirmed" },
+        { "id": "travel-confirmshame", "type": "CONFIRM_SHAMING", "ccpaRef": 3, "selector": "#travel-confirmshame", "context": "main", "phase": "MVP", "evidence": "text", "expectedStatus": "unverified" },
+        { "id": "travel-insurance", "type": "PRECHECKED_OPTIN", "ccpaRef": null, "selector": "#travel-insurance", "context": "main", "phase": "MVP", "evidence": "dom", "expectedStatus": "confirmed" },
+        { "id": "travel-donation", "type": "PRESELECTED_TIP", "ccpaRef": null, "selector": "#travel-donation", "context": "main", "phase": "MVP", "evidence": "dom", "expectedStatus": "confirmed" },
+        { "id": "travel-trick", "type": "TRICK_QUESTION", "ccpaRef": 11, "selector": "#travel-trick", "context": "main", "phase": "V2", "evidence": "text", "expectedStatus": "unverified" },
+        { "id": "travel-sneak", "type": "BASKET_SNEAKING", "ccpaRef": 2, "selector": "#travel-sneak", "context": "main", "phase": "V2", "evidence": "text", "expectedStatus": "unverified" },
+        { "id": "travel-drip", "type": "DRIP_PRICING", "ccpaRef": 8, "selector": "#travel-drip", "context": "main", "phase": "V2", "evidence": "cross-page", "expectedStatus": "confirmed" }
+      ]
+    },
+    {
+      "path": "ott/plans.html", "category": "ott", "pageType": "subscription",
+      "findings": [
+        { "id": "ott-saas", "type": "SAAS_BILLING", "ccpaRef": 12, "selector": "#ott-saas", "context": "main", "phase": "V2", "evidence": "text", "expectedStatus": "unverified" },
+        { "id": "ott-autorenew", "type": "AUTO_RENEW", "ccpaRef": null, "selector": "#ott-autorenew", "context": "main", "phase": "V2", "evidence": "dom", "expectedStatus": "confirmed", "alsoAccept": ["PRECHECKED_OPTIN"] },
+        { "id": "ott-interference", "type": "INTERFACE_INTERFERENCE", "ccpaRef": 6, "selector": "#ott-interference", "context": "main", "phase": "V2", "evidence": "dom", "expectedStatus": "confirmed" }
+      ]
+    },
+    {
+      "path": "ott/signup.html", "category": "ott", "pageType": "signup",
+      "findings": [
+        { "id": "ott-optin", "type": "PRECHECKED_OPTIN", "ccpaRef": null, "selector": "#ott-optin", "context": "main", "phase": "MVP", "evidence": "dom", "expectedStatus": "confirmed" },
+        { "id": "ott-trick", "type": "TRICK_QUESTION", "ccpaRef": 11, "selector": "#ott-trick", "context": "main", "phase": "V2", "evidence": "text", "expectedStatus": "unverified", "alsoAccept": ["PRECHECKED_OPTIN"] }
+      ]
+    },
+    {
+      "path": "ott/account.html", "category": "ott", "pageType": "subscription",
+      "findings": [
+        { "id": "ott-confirmshame", "type": "CONFIRM_SHAMING", "ccpaRef": 3, "selector": "#ott-confirmshame", "context": "main", "phase": "MVP", "evidence": "text", "expectedStatus": "unverified" },
+        { "id": "ott-subtrap", "type": "SUBSCRIPTION_TRAP", "ccpaRef": 5, "selector": "#ott-subtrap", "context": "main", "phase": "V2", "evidence": "text", "expectedStatus": "unverified" }
+      ]
+    },
+    {
+      "path": "news/article.html", "category": "news", "pageType": "article",
+      "findings": [
+        { "id": "news-forced", "type": "FORCED_ACTION", "ccpaRef": 4, "selector": "#news-forced", "context": "main", "phase": "MVP", "evidence": "text", "expectedStatus": "confirmed" },
+        { "id": "news-ad", "type": "DISGUISED_AD", "ccpaRef": 9, "selector": "#news-ad", "context": "main", "phase": "V2", "evidence": "dom", "expectedStatus": "unverified" },
+        { "id": "news-frame-ad", "type": "DISGUISED_AD", "ccpaRef": 9, "selector": "#news-frame-ad", "context": { "iframe": "news/ad-frame.html" }, "phase": "V2", "evidence": "dom", "expectedStatus": "unverified" },
+        { "id": "news-cookie", "type": "COOKIE_WALL", "ccpaRef": null, "selector": "#news-cookie", "context": "main", "phase": "V2", "evidence": "dom", "expectedStatus": "confirmed", "notes": "Full-screen overlay blocks the article until a choice is made" },
+        { "id": "news-cookie-buttons", "type": "INTERFACE_INTERFERENCE", "ccpaRef": 6, "selector": "#news-cookie-buttons", "context": "main", "phase": "V2", "evidence": "dom", "expectedStatus": "confirmed", "alsoAccept": ["COOKIE_WALL"] },
+        { "id": "news-nag", "type": "NAGGING", "ccpaRef": 10, "selector": "#news-nag", "context": "main", "phase": "V2", "evidence": "behaviour", "expectedStatus": "confirmed", "notes": "First shown 4 s after the cookie choice, then 15 s after every close" }
+      ]
+    },
+    {
+      "path": "news/ad-frame.html", "category": "news", "pageType": "other",
+      "findings": [],
+      "notes": "Loaded only as an iframe inside news/article.html; its finding is listed there"
+    },
+    {
+      "path": "clean/product.html", "category": "clean", "pageType": "product", "findings": [],
+      "hardNegatives": [
+        { "selector": "#clean-rating", "looksLike": "FAKE_SOCIAL_PROOF", "notes": "Static aggregate rating" },
+        { "selector": "#clean-discount", "looksLike": "FAKE_DISCOUNT", "notes": "Plausible 17% discount" },
+        { "selector": "#clean-sale-date", "looksLike": "FALSE_URGENCY", "notes": "Fixed calendar end date, no countdown" },
+        { "selector": "#clean-stock", "looksLike": "FAKE_SCARCITY", "notes": "Plain 'In stock'" },
+        { "selector": "#clean-decline", "looksLike": "CONFIRM_SHAMING", "notes": "Neutral 'No thanks', equal button style" }
+      ]
+    },
+    {
+      "path": "clean/cart.html", "category": "clean", "pageType": "cart", "findings": [],
+      "hardNegatives": [
+        { "selector": "#clean-donation", "looksLike": "PRESELECTED_TIP", "notes": "Nothing pre-selected" },
+        { "selector": "#clean-warranty", "looksLike": "PRECHECKED_OPTIN", "notes": "Unchecked add-on" },
+        { "selector": "#clean-fee", "looksLike": "DRIP_PRICING", "notes": "Same ₹40 delivery fee disclosed on the product page" }
+      ]
+    },
+    {
+      "path": "clean/signup.html", "category": "clean", "pageType": "signup", "findings": [],
+      "hardNegatives": [
+        { "selector": "#clean-optin", "looksLike": "PRECHECKED_OPTIN", "notes": "Unticked, plain wording" },
+        { "selector": "#clean-terms", "looksLike": "PRECHECKED_OPTIN", "notes": "Required terms checkbox, unticked" }
+      ]
+    },
+    {
+      "path": "clean/plans.html", "category": "clean", "pageType": "subscription", "findings": [],
+      "hardNegatives": [
+        { "selector": "#clean-trial", "looksLike": "SAAS_BILLING", "notes": "Trial with reminder and opt-in to continue" },
+        { "selector": "#clean-autorenew", "looksLike": "AUTO_RENEW", "notes": "Auto-renew offered but off" },
+        { "selector": "#clean-choices", "looksLike": "INTERFACE_INTERFERENCE", "notes": "Equal-weight buttons" },
+        { "selector": "#clean-cancel", "looksLike": "SUBSCRIPTION_TRAP", "notes": "Visible online cancel" }
+      ]
+    },
+    {
+      "path": "clean/article.html", "category": "clean", "pageType": "article", "findings": [],
+      "hardNegatives": [
+        { "selector": "#clean-app", "looksLike": "FORCED_ACTION", "notes": "Optional app mention; nothing blocked" },
+        { "selector": "#clean-ad", "looksLike": "DISGUISED_AD", "notes": "Clearly labelled, visually distinct ad" },
+        { "selector": "#clean-cookie", "looksLike": "COOKIE_WALL", "notes": "Equal Accept/Reject, does not block content" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Membership plans | FairMart</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#15803d">
+  <header class="site">
+    <span class="logo">FairMart</span>
+    <nav><a href="plans.html">Membership</a></nav>
+  </header>
+
+  <main>
+    <h1>FairMart Plus membership</h1>
+    <div class="row">
+      <div class="card">
+        <h2>Plus Monthly</h2>
+        <p class="price">₹99 / month</p>
+        <!-- HARD NEGATIVE: honest free trial with reminder and easy cancel -->
+        <p id="clean-trial">Try it free for 7 days. We'll email you 3 days before the trial ends, and you
+          will only be charged ₹99/month if you choose to continue.</p>
+        <!-- HARD NEGATIVE: auto-renew offered but OFF by default -->
+        <p id="clean-autorenew"><label class="toggle"><input type="checkbox" role="switch" name="autorenew">
+          Renew automatically each month</label></p>
+      </div>
+      <div class="card">
+        <h2>Plus Yearly</h2>
+        <p class="price">₹999 / year</p>
+        <p>Same benefits, billed once a year.</p>
+      </div>
+    </div>
+
+    <!-- HARD NEGATIVE: equal-weight choices -->
+    <div class="card" id="clean-choices" style="text-align:center">
+      <a class="btn" href="#">Start free trial</a>
+      <a class="btn" href="#">Choose yearly plan</a>
+    </div>
+
+    <!-- HARD NEGATIVE: cancel is visible and online -->
+    <div class="card" id="clean-cancel">
+      <h3>Already a member?</h3>
+      <p>You can cancel online at any time from this page. <a class="btn secondary" href="#">Cancel membership</a></p>
+    </div>
+  </main>
+  <footer class="testnote">Fictional test page for the DarkLens project. Not a real business.</footer>
+</body>
+</html>

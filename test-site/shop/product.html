@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boltwave X2 Wireless Earbuds | Kartiq</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#2f5bea">
+  <header class="site">
+    <span class="logo">Kartiq</span>
+    <nav><a href="product.html">Electronics</a><a href="cart.html">Cart</a></nav>
+  </header>
+
+  <main>
+    <div class="row">
+      <div class="card" style="text-align:center;font-size:6rem">🎧</div>
+      <div class="card">
+        <h1>Boltwave X2 Wireless Earbuds</h1>
+        <p class="muted">★ 4.2 · Bluetooth 5.3 · 30 h battery</p>
+
+        <!-- PLANTED: FAKE_DISCOUNT (inflated MRP, 90% off) -->
+        <p id="shop-discount">
+          <span class="mrp">₹14,999</span>
+          <span class="price" id="shop-price">₹1,499</span>
+          <span class="badge green">90% off</span>
+        </p>
+
+        <!-- PLANTED: FALSE_URGENCY (countdown resets on every reload) -->
+        <p id="shop-urgency" class="urgent">⚡ Lightning deal ends in <span id="shop-timer">15:00</span></p>
+
+        <!-- PLANTED: FAKE_SCARCITY -->
+        <p id="shop-scarcity" class="urgent">Only 2 left in stock — order soon.</p>
+
+        <!-- PLANTED: FAKE_SOCIAL_PROOF (random number every load) -->
+        <p id="shop-social">👀 <span id="shop-viewers">32</span> people are viewing this right now</p>
+
+        <a class="btn huge" href="cart.html">Add to cart</a>
+      </div>
+    </div>
+
+    <!-- PLANTED: FAKE_SCARCITY inside an open Shadow DOM -->
+    <kartiq-recommendations id="shop-recommendations"></kartiq-recommendations>
+  </main>
+
+  <!-- PLANTED: CONFIRM_SHAMING (decline option shames the user) -->
+  <div class="overlay hidden" id="shop-coupon-popup">
+    <div class="modal">
+      <h3>Wait! Get an extra 10% off 🎁</h3>
+      <p>Join Kartiq Club to unlock your coupon.</p>
+      <p><button class="btn" id="shop-coupon-yes">Yes, I want to save!</button></p>
+      <button class="btn secondary" id="shop-confirmshame">No thanks, I prefer paying full price</button>
+    </div>
+  </div>
+
+  <footer class="testnote">Fictional test page for the DarkLens project. Not a real business.</footer>
+
+  <script src="../shared/fake-behaviour.js"></script>
+  <script>
+    startResettingTimer("shop-timer", 15);
+    randomCount("shop-viewers", 18, 64);
+    setTimeout(() => document.getElementById("shop-coupon-popup").classList.remove("hidden"), 3000);
+    closeOnClick("shop-coupon-popup", ["shop-coupon-yes", "shop-confirmshame"]);
+
+    // A web component whose content lives in an *open* shadow root.
+    class KartiqRecommendations extends HTMLElement {
+      connectedCallback() {
+        const root = this.attachShadow({ mode: "open" });
+        root.innerHTML = `
+          <style>
+            .box { background:#fff; border:1px solid #e3e5e8; border-radius:10px; padding:16px 20px; font-family:system-ui; }
+            .urgent { color:#c0392b; font-weight:700; }
+          </style>
+          <div class="box">
+            <h3>Customers also bought</h3>
+            <p><strong>Boltwave Charging Case</strong> · ₹799</p>
+            <p id="shop-shadow-scarcity" class="urgent">Only 1 left!</p>
+          </div>`;
+      }
+    }
+    customElements.define("kartiq-recommendations", KartiqRecommendations);
+  </script>
+</body>
+</html>

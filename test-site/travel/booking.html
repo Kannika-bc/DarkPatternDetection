@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Review your booking | Yatrly</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#0f766e">
+  <header class="site">
+    <span class="logo">Yatrly</span>
+    <nav><a href="flights.html">Flights</a></nav>
+  </header>
+
+  <main>
+    <h1>Review your booking</h1>
+    <div class="row">
+      <div>
+        <div class="card">
+          <strong>SkyIndigo 6E-2041</strong> · BLR → DEL · Sat, 12 Dec
+        </div>
+
+        <!-- PLANTED: INTERFACE_INTERFERENCE (huge "yes" vs tiny grey "no") + CONFIRM_SHAMING (the "no" text) -->
+        <div class="card" id="travel-interference" style="text-align:center">
+          <h3>Add Free Cancellation for INR 399?</h3>
+          <p>Get a full refund if your plans change.</p>
+          <p><button class="btn huge">Yes, protect my booking</button></p>
+          <button class="link-tiny" id="travel-confirmshame">No, I'm okay losing my money</button>
+        </div>
+
+        <div class="card">
+          <!-- PLANTED: PRECHECKED_OPTIN -->
+          <p id="travel-insurance">
+            <label><input type="checkbox" name="insurance" checked>
+              Secure my trip with travel insurance (INR 249 per traveller)</label>
+          </p>
+
+          <!-- PLANTED: PRESELECTED_TIP (donation pre-selected) -->
+          <fieldset id="travel-donation" style="border:0;padding:0">
+            <legend>Contribute to the Green Skies tree plantation drive</legend>
+            <label><input type="radio" name="donate" value="0"> No, thanks</label>
+            <label><input type="radio" name="donate" value="10" checked> INR 10</label>
+            <label><input type="radio" name="donate" value="50"> INR 50</label>
+          </fieldset>
+
+          <!-- PLANTED: TRICK_QUESTION (double negative) -->
+          <p id="travel-trick">
+            <label><input type="checkbox" name="sms">
+              Tick this box if you would prefer not to opt out of receiving SMS updates and offers.</label>
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Fare summary</h3>
+        <table class="summary">
+          <tr><td>Base fare</td><td>INR 4,610</td></tr>
+          <tr><td>Taxes &amp; airline fees</td><td>INR 822</td></tr>
+          <!-- PLANTED: BASKET_SNEAKING (never chosen by the user) -->
+          <tr id="travel-sneak"><td>Seat assurance (auto-added)</td><td>INR 199</td></tr>
+          <!-- PLANTED: DRIP_PRICING (not shown on the results page) -->
+          <tbody id="travel-drip">
+            <tr><td>Convenience fee</td><td>INR 350</td></tr>
+            <tr><td>Booking service charge</td><td>INR 99</td></tr>
+          </tbody>
+          <tr><td>Travel insurance</td><td>INR 249</td></tr>
+          <tr><td>Green Skies donation</td><td>INR 10</td></tr>
+          <tr class="total"><td>Total</td><td>INR 6,339</td></tr>
+        </table>
+        <p><a class="btn" href="#">Continue to payment</a></p>
+      </div>
+    </div>
+  </main>
+  <footer class="testnote">Fictional test page for the DarkLens project. Not a real business.</footer>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shopping cart | Kartiq</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#2f5bea">
+  <header class="site">
+    <span class="logo">Kartiq</span>
+    <nav><a href="product.html">Electronics</a><a href="cart.html">Cart (2)</a></nav>
+  </header>
+
+  <main>
+    <h1>Shopping cart</h1>
+    <div class="card">
+      <div class="row" style="align-items:center">
+        <div><strong>Boltwave X2 Wireless Earbuds</strong><br><span class="muted">Qty 1</span></div>
+        <!-- PLANTED: BAIT_AND_SWITCH (product page said ₹1,499) -->
+        <div id="shop-bait" style="text-align:right">
+          <span class="price">₹1,799</span><br>
+          <span class="tiny">Price updated</span>
+        </div>
+      </div>
+      <hr>
+      <!-- PLANTED: BASKET_SNEAKING (the user never added this) -->
+      <div class="row" style="align-items:center" id="shop-sneak">
+        <div><strong>Kartiq Care+ Extended Warranty (1 year)</strong><br>
+          <span class="muted">Added for your protection</span> · <a href="#" class="tiny">remove</a></div>
+        <div style="text-align:right"><span class="price">₹299</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <table class="summary">
+        <tr><td>Subtotal (2 items)</td><td>₹2,098</td></tr>
+        <tr class="total"><td>Total</td><td>₹2,098</td></tr>
+      </table>
+      <p><a class="btn" href="checkout.html">Proceed to checkout</a></p>
+    </div>
+  </main>
+  <footer class="testnote">Fictional test page for the DarkLens project. Not a real business.</footer>
+</body>
+</html>

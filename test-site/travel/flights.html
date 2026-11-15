@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flights Bengaluru → Delhi | Yatrly</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#0f766e">
+  <header class="site">
+    <span class="logo">Yatrly</span>
+    <nav><a href="flights.html">Flights</a><a href="booking.html">My booking</a></nav>
+  </header>
+
+  <main>
+    <h1>Bengaluru (BLR) → New Delhi (DEL)</h1>
+    <p class="muted">Sat, 12 Dec · 1 adult · Economy</p>
+
+    <!-- PLANTED: FALSE_URGENCY (timer restarts at 09:59 on every reload) -->
+    <div class="card" id="travel-urgency" style="background:#fff7ed">
+      <span class="urgent">⏳ Fares locked for you for <span id="travel-timer">10:00</span> — prices may go up after that!</span>
+    </div>
+
+    <div class="card">
+      <div class="row" style="align-items:center">
+        <div><strong>SkyIndigo 6E-2041</strong><br><span class="muted">06:10 → 08:55 · Non-stop</span></div>
+        <div>
+          <span class="price">INR 5,432</span><br>
+          <!-- PLANTED: FAKE_SCARCITY -->
+          <span id="travel-scarcity" class="urgent">Only 2 seats left at this fare!</span>
+        </div>
+        <div style="flex:0 0 auto"><a class="btn" href="booking.html">Book</a></div>
+      </div>
+      <!-- PLANTED: FAKE_SOCIAL_PROOF (random number every load) -->
+      <p id="travel-social" class="muted">🔥 <span id="travel-bookers">14</span> people booked this flight in the last hour</p>
+    </div>
+
+    <div class="card">
+      <div class="row" style="align-items:center">
+        <div><strong>AirVista AV-118</strong><br><span class="muted">09:30 → 12:20 · Non-stop</span></div>
+        <div><span class="price">INR 6,105</span></div>
+        <div style="flex:0 0 auto"><a class="btn" href="booking.html">Book</a></div>
+      </div>
+    </div>
+
+    <h2>International deals</h2>
+    <div class="card">
+      <table class="summary">
+        <tr><td>Delhi → Paris</td><td>€412.50</td></tr>
+        <tr><td>Mumbai → London</td><td>£1,240.00</td></tr>
+        <tr><td>Bengaluru → San Francisco</td><td>US$ 389</td></tr>
+        <tr><td>Chennai → Singapore</td><td>Rs. 18,750.00</td></tr>
+      </table>
+    </div>
+  </main>
+
+  <!-- PLANTED: COOKIE_WALL (no reject option, only "Manage options") -->
+  <div class="banner-bottom" id="travel-cookie">
+    <span>We use cookies to personalise fares and show you relevant offers.</span>
+    <span>
+      <button class="link-tiny" id="travel-cookie-manage">Manage options</button>
+      <button class="btn huge" id="travel-cookie-accept">Accept all &amp; continue</button>
+    </span>
+  </div>
+
+  <footer class="testnote">Fictional test page for the DarkLens project. Not a real business.</footer>
+
+  <script src="../shared/fake-behaviour.js"></script>
+  <script>
+    startResettingTimer("travel-timer", 10);
+    randomCount("travel-bookers", 9, 27);
+    document.getElementById("travel-cookie-accept").addEventListener("click", () =>
+      document.getElementById("travel-cookie").classList.add("hidden"));
+  </script>
+</body>
+</html>

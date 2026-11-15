@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create your account | StreamBox</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#7c3aed">
+  <header class="site">
+    <span class="logo">StreamBox</span>
+    <nav><a href="plans.html">Plans</a></nav>
+  </header>
+
+  <main>
+    <form class="card" style="max-width:480px;margin:auto" onsubmit="return false">
+      <h1>Create your account</h1>
+      <!-- PRIVACY TEST: DarkLens must never read these values. -->
+      <p><label>Email<br><input type="email" name="email" value="test@example.com" autocomplete="off"></label></p>
+      <p><label>Password<br><input type="password" name="password" value="not-a-real-password" autocomplete="off"></label></p>
+
+      <!-- PLANTED: PRECHECKED_OPTIN -->
+      <p id="ott-optin">
+        <label><input type="checkbox" name="newsletter" checked>
+          Yes, send me the StreamBox newsletter and personalised recommendations</label>
+      </p>
+
+      <!-- PLANTED: TRICK_QUESTION (double negative, and pre-ticked) -->
+      <p id="ott-trick">
+        <label><input type="checkbox" name="partners" checked>
+          Uncheck this box if you do not wish to not receive offers from our partners.</label>
+      </p>
+
+      <p><button class="btn" type="submit">Create account</button></p>
+      <p class="muted">Payment details are collected on the next step.</p>
+    </form>
+  </main>
+  <footer class="testnote">Fictional test page for the DarkLens project. Not a real business.</footer>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spice Route Kitchen – Order online | Tiffinly</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#e4572e">
+  <header class="site">
+    <span class="logo">Tiffinly</span>
+    <nav><a href="menu.html">Restaurants</a><a href="cart.html">Cart (1)</a></nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <h1>Spice Route Kitchen</h1>
+      <p class="muted">North Indian · Biryani · 30–35 min · ★ 4.1</p>
+      <!-- PLANTED: FALSE_URGENCY (keyword) -->
+      <p id="food-urgency" class="urgent">Hurry! Kitchen closing soon — order in the next 10 minutes or miss out!</p>
+      <!-- PLANTED: FAKE_SOCIAL_PROOF -->
+      <p id="food-social"><span class="badge red">🔥 Ordered 500+ times in the last hour</span></p>
+    </div>
+
+    <!-- SPA-style tabs: switching changes the URL with history.pushState (no reload) -->
+    <div class="card">
+      <nav class="row" style="flex-wrap:nowrap">
+        <button class="btn secondary" data-tab="biryani">Biryani</button>
+        <button class="btn secondary" data-tab="curries">Curries</button>
+      </nav>
+      <div id="tab-content"></div>
+    </div>
+
+    <!-- PLANTED: FORCED_ACTION (blocks the rest of the menu) -->
+    <div class="card" id="food-forced" style="text-align:center;background:#fff4f0">
+      <h3>Want to see the full menu?</h3>
+      <p>Download the Tiffinly app to continue browsing the menu.</p>
+      <a class="btn" href="#">Get the app</a>
+    </div>
+  </main>
+
+  <!-- PLANTED: NAGGING ("rate us" popup that comes back 20 s after every close) -->
+  <div class="overlay hidden" id="food-nag">
+    <div class="modal">
+      <h3>Enjoying Tiffinly? ⭐</h3>
+      <p>Rate us 5 stars on the app store!</p>
+      <button class="btn" id="food-nag-rate">Rate now</button>
+      <button class="btn secondary" id="food-nag-later">Maybe later</button>
+    </div>
+  </div>
+
+  <footer class="testnote">Fictional test page for the DarkLens project. Not a real business.</footer>
+
+  <script src="../shared/fake-behaviour.js"></script>
+  <script>
+    const MENUS = {
+      biryani: [["Hyderabadi Chicken Biryani", "Rs 249"], ["Veg Dum Biryani", "Rs 199"]],
+      curries: [["Paneer Butter Masala", "Rs 229"], ["Dal Makhani", "Rs 179"]],
+    };
+    function render(tab) {
+      const box = document.getElementById("tab-content");
+      box.innerHTML = MENUS[tab].map(([name, price]) =>
+        `<div class="row" style="align-items:center"><div><strong>${name}</strong><br><span class="muted">${price}</span></div>` +
+        `<div style="flex:0 0 auto"><a class="btn" href="cart.html">Add</a></div></div>`).join("<hr>");
+      // PLANTED: FAKE_SCARCITY injected 2 s after the tab renders (tests MutationObserver handling)
+      if (tab === "biryani") {
+        setTimeout(() => {
+          if (document.getElementById("food-scarcity")) return;
+          const p = document.createElement("p");
+          p.id = "food-scarcity";
+          p.className = "urgent";
+          p.textContent = "Only 3 portions left today!";
+          box.prepend(p);
+        }, 2000);
+      }
+    }
+    document.querySelectorAll("[data-tab]").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        history.pushState({ tab: btn.dataset.tab }, "", `?tab=${btn.dataset.tab}`);
+        render(btn.dataset.tab);
+      }));
+    window.addEventListener("popstate", (e) => render((e.state && e.state.tab) || "biryani"));
+    render(new URLSearchParams(location.search).get("tab") || "biryani");
+
+    // Nagging: first appears after 5 s, then again 20 s after every close.
+    setTimeout(() => document.getElementById("food-nag").classList.remove("hidden"), 5000);
+    nagRepeatedly("food-nag", ["food-nag-rate", "food-nag-later"], 20000);
+  </script>
+</body>
+</html>

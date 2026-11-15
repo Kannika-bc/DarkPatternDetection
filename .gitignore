@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+# Node (not used, but just in case)
+node_modules/
+# Data, models, vector store (never commit large files)
+ml/data/
+ml/models/
+*.joblib
+*.pt
+*.bin
+*.safetensors
+*.onnx
+rag/chroma/
+rag/data/*.pdf
+# Outputs
+snapshot*.json
+reports/
+*.log
+.env
+.DS_Store
+Thumbs.db

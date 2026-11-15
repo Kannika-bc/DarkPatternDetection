@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Choose your plan | StreamBox</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#7c3aed">
+  <header class="site">
+    <span class="logo">StreamBox</span>
+    <nav><a href="plans.html">Plans</a><a href="account.html">Account</a></nav>
+  </header>
+
+  <main>
+    <h1>Unlimited movies, shows and live sports</h1>
+    <div class="row">
+      <div class="card">
+        <h2>Premium</h2>
+        <p class="price">₹649 / month</p>
+        <ul><li>4K + Dolby Atmos</li><li>4 screens</li><li>Downloads</li></ul>
+
+        <!-- PLANTED: SAAS_BILLING (free trial silently converts to paid; card required) -->
+        <div id="ott-saas">
+          <p><strong>Start your FREE 7-day trial</strong></p>
+          <p class="tiny">Credit/debit card required. After your trial ends you will be automatically charged
+            ₹649/month until you cancel. No reminder will be sent.</p>
+        </div>
+
+        <!-- PLANTED: AUTO_RENEW (switched on by default, in small print) -->
+        <p id="ott-autorenew" class="tiny">
+          <label class="toggle"><input type="checkbox" role="switch" name="autorenew" checked> Auto-renew every month</label>
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Mobile</h2>
+        <p class="price">₹149 / month</p>
+        <ul><li>480p</li><li>1 phone</li></ul>
+      </div>
+    </div>
+
+    <!-- PLANTED: INTERFACE_INTERFERENCE (huge trial button vs tiny grey basic-plan link) -->
+    <div class="card" id="ott-interference" style="text-align:center">
+      <p><a class="btn huge" href="signup.html">Start free trial</a></p>
+      <a class="link-tiny" href="signup.html">continue with the Mobile plan instead</a>
+    </div>
+  </main>
+  <footer class="testnote">Fictional test page for the DarkLens project. Not a real business.</footer>
+</body>
+</html>

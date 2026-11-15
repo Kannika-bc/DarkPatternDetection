@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://darklens.local/page_snapshot.schema.json",
+  "title": "PageSnapshot",
+  "description": "Single source of truth for the data DarkLens collects from a web page. Produced by BOTH collectors (Chrome extension and Python Playwright) and consumed by the Python analyzer. Never contains form input values, passwords, cookies, hidden fields or browsing history.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["url", "title", "collected_at", "collector", "segments", "checkboxes", "buttons", "prices", "popups", "timers"],
+  "properties": {
+    "url": { "type": "string", "description": "Page URL (http/https)." },
+    "title": { "type": "string" },
+    "collected_at": { "type": "string", "description": "ISO-8601 timestamp." },
+    "collector": { "enum": ["extension", "playwright"] },
+    "segments": {
+      "type": "array", "maxItems": 2000,
+      "description": "Visible text blocks, trimmed, deduplicated, max 300 chars each.",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "tag", "text", "is_visible"],
+        "properties": {
+          "id": { "type": "string", "description": "Value of data-darklens-id, e.g. el-12." },
+          "tag": { "type": "string" },
+          "text": { "type": "string", "maxLength": 300 },
+          "is_visible": { "type": "boolean" },
+          "font_size": { "type": ["number", "null"], "description": "Computed font size in px." },
+          "fine_print": { "type": ["string", "null"], "description": "Part of the text rendered in tiny (<12px) or very low-contrast type." }
+        }
+      }
+    },
+    "checkboxes": {
+      "type": "array",
+      "description": "Checkboxes and radio buttons (state + label only, never values typed by the user).",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "type", "checked", "label"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "enum": ["checkbox", "radio"] },
+          "checked": { "type": "boolean" },
+          "label": { "type": "string" },
+          "group": { "type": ["string", "null"], "description": "Radio group name attribute." },
+          "group_label": { "type": ["string", "null"], "description": "Text of the enclosing <legend> or group heading." },
+          "required": { "type": "boolean", "default": false }
+        }
+      }
+    },
+    "buttons": {
+      "type": "array",
+      "description": "Buttons and button-like links with their visual weight.",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "text", "width", "height", "font_size", "bg_color", "text_color", "in_popup"],
+        "properties": {
+          "id": { "type": "string" },
+          "text": { "type": "string" },
+          "width": { "type": "number" },
+          "height": { "type": "number" },
+          "font_size": { "type": "number" },
+          "bg_color": { "type": "string", "description": "Effective background colour as rgb()/rgba()." },
+          "text_color": { "type": "string" },
+          "in_popup": { "type": "boolean" },
+          "kind": { "enum": ["button", "link"], "default": "button" },
+          "group_id": { "type": ["string", "null"], "description": "darklens id of the nearest container holding 2+ buttons (choices shown together)." },
+          "popup_id": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "prices": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "raw_text", "value", "currency", "struck_through"],
+        "properties": {
+          "id": { "type": "string" },
+          "raw_text": { "type": "string" },
+          "value": { "type": ["number", "null"] },
+          "currency": { "type": ["string", "null"], "description": "ISO code: INR, USD, EUR, GBP." },
+          "struck_through": { "type": "boolean" },
+          "context": { "type": ["string", "null"], "description": "Text of the surrounding row, e.g. 'Platform fee Rs 15.00'." }
+        }
+      }
+    },
+    "popups": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "text", "is_blocking"],
+        "properties": {
+          "id": { "type": "string" },
+          "text": { "type": "string" },
+          "is_blocking": { "type": "boolean", "description": "Covers most of the viewport." },
+          "times_shown": { "type": "integer", "default": 1, "description": "How often this popup appeared (extension counts re-appearances)." }
+        }
+      }
+    },
+    "timers": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "raw_text", "seconds_left"],
+        "properties": {
+          "id": { "type": "string" },
+          "raw_text": { "type": "string" },
+          "seconds_left": { "type": ["integer", "null"] },
+          "reset_on_reload": { "type": ["boolean", "null"], "description": "True if the countdown restarted after a reload (checked by the Playwright collector)." }
+        }
+      }
+    },
+    "previous_prices": {
+      "type": "array",
+      "description": "Prices seen earlier on the same site (first-seen per product). Used for drip pricing and bait-and-switch.",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["label", "value"],
+        "properties": {
+          "label": { "type": "string" },
+          "value": { "type": "number" },
+          "currency": { "type": ["string", "null"] },
+          "url": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "stats": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "elements_scanned": { "type": "integer" },
+        "duration_ms": { "type": "number" }
+      }
+    }
+  }
+}

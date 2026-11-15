@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create your account | FairMart</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#15803d">
+  <header class="site">
+    <span class="logo">FairMart</span>
+  </header>
+
+  <main>
+    <form class="card" style="max-width:480px;margin:auto" onsubmit="return false">
+      <h1>Create your account</h1>
+      <!-- PRIVACY TEST: DarkLens must never read these values. -->
+      <p><label>Email<br><input type="email" name="email" value="test@example.com" autocomplete="off"></label></p>
+      <p><label>Password<br><input type="password" name="password" value="not-a-real-password" autocomplete="off"></label></p>
+
+      <!-- HARD NEGATIVE: unticked, plainly worded consent -->
+      <p id="clean-optin"><label><input type="checkbox" name="newsletter">
+        Email me product updates and offers. You can unsubscribe at any time.</label></p>
+
+      <!-- HARD NEGATIVE: a required checkbox is not a pre-checked opt-in -->
+      <p id="clean-terms"><label><input type="checkbox" name="terms" required>
+        I agree to the Terms of Service and Privacy Policy</label></p>
+
+      <p><button class="btn" type="submit">Create account</button></p>
+    </form>
+  </main>
+  <footer class="testnote">Fictional test page for the DarkLens project. Not a real business.</footer>
+</body>
+</html>

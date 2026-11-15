@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>City lakes get a second life as volunteers restore wetlands | The Daily Ledger</title>
+  <link rel="stylesheet" href="../shared/site.css">
+</head>
+<body style="--brand:#111827">
+  <header class="site">
+    <span class="logo">The Daily Ledger</span>
+    <nav><a href="article.html">India</a><a href="article.html">World</a><a href="article.html">Business</a></nav>
+  </header>
+
+  <main>
+    <article class="card">
+      <p class="muted">Environment · 6 min read · By Staff Reporter</p>
+      <h1>City lakes get a second life as volunteers restore wetlands</h1>
+      <p>Over the past two years, groups of volunteers have cleared weeds, rebuilt inlets and planted native
+        grasses around three lakes on the city's eastern edge. Birdwatchers say migratory species have
+        returned for the first time in a decade.</p>
+      <p>Officials credit a mix of citizen effort and a small municipal grant. "The lakes were dying slowly,"
+        said one volunteer coordinator. "Now the water is clear enough to see the bottom near the inlets."</p>
+
+      <!-- PLANTED: FORCED_ACTION (sign-in wall) -->
+      <div id="news-forced" class="card" style="background:#f3f4f6;text-align:center">
+        <h3>Sign in to continue reading</h3>
+        <p>Create a free account or log in to read the rest of this story.</p>
+        <a class="btn" href="#">Sign in</a>
+      </div>
+    </article>
+
+    <!-- PLANTED: DISGUISED_AD (styled exactly like a news story, tiny low-contrast "Ad" label) -->
+    <h3>More stories</h3>
+    <div class="card" id="news-ad">
+      <p class="muted">Personal finance · 3 min read <span class="tiny">Ad</span></p>
+      <h3><a href="#">This new investment app is helping Indians retire 10 years early</a></h3>
+      <p>Experts are surprised by how simple the method is. Here's how thousands are doing it.</p>
+    </div>
+    <div class="card">
+      <p class="muted">Civic · 4 min read</p>
+      <h3><a href="article.html">Metro line extension to open in phases from March</a></h3>
+      <p>The first stretch of the extension will connect two residential hubs to the business district.</p>
+    </div>
+
+    <!-- PLANTED: DISGUISED_AD inside a same-origin iframe -->
+    <iframe src="ad-frame.html" title="Recommended" style="width:100%;height:190px;border:0"></iframe>
+  </main>
+
+  <!-- PLANTED: COOKIE_WALL (content blocked until cookies are accepted)
+       + INTERFACE_INTERFERENCE (huge "Accept", tiny grey "Reject") -->
+  <div class="overlay" id="news-cookie">
+    <div class="modal" id="news-cookie-buttons">
+      <h3>We value your privacy</h3>
+      <p>We and our 846 partners use cookies to personalise ads and content. Accept to keep reading.</p>
+      <p><button class="btn huge" id="news-cookie-accept">Accept all &amp; continue</button></p>
+      <button class="link-tiny" id="news-cookie-reject">reject</button>
+    </div>
+  </div>
+
+  <!-- PLANTED: NAGGING (notification prompt returns 15 s after every close) -->
+  <div class="overlay hidden" id="news-nag">
+    <div class="modal">
+      <h3>🔔 Never miss a story</h3>
+      <p>Allow The Daily Ledger to send you breaking-news notifications.</p>
+      <button class="btn" id="news-nag-allow">Allow</button>
+      <button class="btn secondary" id="news-nag-later">Not now</button>
+    </div>
+  </div>
+
+  <footer class="testnote">Fictional test page for the DarkLens project. Not a real publication.</footer>
+
+  <script src="../shared/fake-behaviour.js"></script>
+  <script>
+    // The "reject" choice also hides the wall, but it is made deliberately hard to see.
+    closeOnClick("news-cookie", ["news-cookie-accept", "news-cookie-reject"]);
+    document.getElementById("news-cookie-accept").addEventListener("click", startNagging);
+    document.getElementById("news-cookie-reject").addEventListener("click", startNagging);
+    function startNagging() {
+      setTimeout(() => document.getElementById("news-nag").classList.remove("hidden"), 4000);
+    }
+    nagRepeatedly("news-nag", ["news-nag-allow", "news-nag-later"], 15000);
+  </script>
+</body>
+</html>
