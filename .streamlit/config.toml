@@ -1,0 +1,8 @@
+# Privacy rule: the dashboard must only be reachable from this laptop.
+[server]
+address = "localhost"
+port = 8501
+headless = true
+
+[browser]
+gatherUsageStats = false
