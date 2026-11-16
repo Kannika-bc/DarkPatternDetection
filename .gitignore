@@ -24,3 +24,6 @@ reports/
 .env
 .DS_Store
 Thumbs.db
+# Local notes and reports (not part of the repository)
+docs/
+CLAUDE.md

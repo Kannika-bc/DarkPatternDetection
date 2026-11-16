@@ -158,7 +158,7 @@ def page_ml() -> None:
     st.info("Benchmark ≠ real pages. DistilBERT wins on the benchmark, but on real page text (prices, fee rows) it "
             "was >97% sure that ordinary labels were dark patterns. MiniLM + LR is better calibrated, so the live "
             "analyzer uses it, and only to support rules or for very confident (≥0.97) sentence-level hits. "
-            "See docs/report/evaluation.md.")
+            "Run `python -m scripts.evaluate_test_site` for details.")
 
 
 def page_about() -> None:

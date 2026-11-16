@@ -23,7 +23,7 @@ from backend.rules.drip_pricing import FEE, NORMAL, TOTAL
 # Which ML model the live analyzer uses. DistilBERT scores best on the benchmark test set, but on
 # real page text (prices, fee rows, menu labels) it is over-confident: our test-site evaluation
 # showed it >97 % sure that "Item total" or "Rs 25.00" are dark patterns. MiniLM + LR is far better
-# calibrated on such text (see docs/report/evaluation.md), so it is the default here.
+# calibrated on such text (see scripts/evaluate_test_site.py), so it is the default here.
 # Override with the environment variable DARKLENS_MODEL=distilbert|minilm_lr|tfidf_lr|auto.
 LIVE_MODEL = os.environ.get("DARKLENS_MODEL", "minilm_lr")
 

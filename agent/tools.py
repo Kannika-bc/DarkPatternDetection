@@ -1,6 +1,6 @@
 """The agent's tools: a guarded Playwright browser + the DarkLens analyzer + price memory + RAG.
 
-Tools (as in docs/PLAN.md): open_page(url), get_snapshot(), analyze_page(), list_clickable(),
+Tools: open_page(url), get_snapshot(), analyze_page(), list_clickable(),
 click(text), track_price(), ccpa_lookup(query).
 
 Guardrails live HERE (not in the LLM prompt), so no LLM answer can bypass them:
