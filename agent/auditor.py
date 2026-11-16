@@ -195,7 +195,11 @@ class Auditor:
 
     def decide(self, state: AgentState) -> AgentState:
         url = self.tools.page.url
-        options = [c for c in self.tools.list_clickable() if (url, c.text.lower()) not in self.tried]
+        # Hide links back to pages we already audited: the journey should only move forward
+        # (the LLM otherwise wanders back to the cart and wastes steps).
+        options = [c for c in self.tools.list_clickable()
+                   if (url, c.text.lower()) not in self.tried
+                   and not (c.href and urljoin(url, c.href).split("#")[0] in self.visited)]
         if not options:
             return {"done": True, "stop_reason": "no more forward actions"}
         choice: Optional[str] = None
@@ -271,6 +275,8 @@ class Auditor:
             for ptype in sorted({f.type for f in r.findings}):
                 info = info_for(ptype)
                 number = info.ccpa_ref or info.related
+                if not number:  # e.g. generic ML "suspicious wording": no CCPA pattern to cite
+                    continue
                 query = f"{CCPA_NAMES.get(number, info.name)}: {info.name}"
                 hits = [h for h in ccpa_lookup(query, k=4) if h["pattern"] == number] or ccpa_lookup(query, k=1)
                 if hits and all(x.pattern != hits[0]["pattern"] for x in refs):
@@ -286,14 +292,23 @@ class Auditor:
 
     def _llm_summary(self) -> str:
         r = self.report
-        findings = "\n".join(f"- step {f.step}: {f.type} (CCPA {f.ccpa_ref or '-'}; {f.status}): {f.text[:120]}"
-                             for f in r.findings[:25])
-        prices = "\n".join(f"- step {p.step} {p.kind} {p.label}: {p.value}" for p in r.price_changes) or "none"
+        def ref(f) -> str:
+            return f"CCPA {f.ccpa_ref}" if f.ccpa_ref else "not a numbered CCPA pattern"
+
+        # Give the model the exact evidence (incl. the rule's note, e.g. "shown for 1,499, now 1,799")
+        # so it never has to compute or guess numbers itself.
+        findings = "\n".join(
+            f"- step {f.step}: {info_for(f.type).name} ({ref(f)}; {f.status}). Evidence: \"{f.text[:110]}\". "
+            f"Detail: {f.explanation.split('. ')[0][:160]}" for f in r.findings[:25])
+        prices = "\n".join(f"- step {p.step}: {p.kind} '{p.label}' = {p.value:,.0f}" for p in r.price_changes) or "none"
         passages = "\n".join(f"[CCPA {c.pattern} {c.name}] {c.passage}" for c in r.ccpa_references)
         prompt = (
-            "Write a short audit summary (120-200 words, plain English, for a consumer) of this website journey.\n"
-            "Use ONLY the facts and the CCPA passages below. Cite CCPA pattern numbers like (CCPA 8). "
-            "Mention price changes across steps if any. Do not invent anything.\n\n"
+            "Write a short audit summary (120-200 words) for a consumer, as 2-3 plain paragraphs. "
+            "No headings, no markdown, no numbered list.\n"
+            "Rules: use ONLY the facts and CCPA passages below. Copy prices exactly as listed; never calculate "
+            "or change a number. Cite numbered patterns like (CCPA 8); for findings that are not numbered CCPA "
+            "patterns, do not write a CCPA number. 'confirmed' means observed directly; 'unverified' means a "
+            "claim that could not be checked: say so. Do not invent anything.\n\n"
             f"Steps taken: {len(r.steps)}; trust score {r.trust_score}/100.\nFindings:\n{findings}\n"
             f"Prices seen:\n{prices}\n\nCCPA passages:\n{passages}\n")
         try:

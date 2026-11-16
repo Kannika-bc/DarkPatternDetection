@@ -126,7 +126,9 @@ confident sentence-level hits.
 **Agent example** (`docs/report/agent-report-shop.json`): product → cart → checkout in 3 steps,
 stopped before "Continue to payment"; found 11 patterns incl. *confirmed* bait and switch
 (₹1,499 → ₹1,799), *confirmed* drip pricing (handling + transaction fees, total ₹2,246) and a
-*confirmed* fake countdown (restarted on reload). Trust score 21/100.
+*confirmed* fake countdown (restarted on reload). Trust score 21/100. With the LLM (qwen2.5:7b, 100% on the
+RTX 4060 GPU) the agent chose "Add to cart" → "Proceed to checkout" itself and wrote a grounded summary
+(`docs/report/agent-report-shop-llm.json`, `agent-report-food-llm.json`); about 2 minutes per journey.
 
 ## Limitations
 
@@ -134,7 +136,7 @@ English text only; claims like "only 2 left" cannot be proven false from outside
 behaviour patterns need time or interaction; closed shadow roots and cross-origin iframes are
 invisible; the public datasets are from 2019–2022 global e-commerce sites, not Indian ones; the test
 site is small and written by the same team as the rules, so real-world accuracy will be lower;
-the LLM path needs Ollama and was developed against the fallback crawl.
+the LLM agent was tested with qwen2.5:7b only.
 
 ## Privacy & ethics
 
