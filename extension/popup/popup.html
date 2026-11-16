@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DarkLens</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <strong>DarkLens</strong>
+    <span class="sub">dark pattern detector · CCPA 2023</span>
+  </header>
+
+  <!-- Shown when the Python backend is not running -->
+  <section id="offline" class="hidden">
+    <p><b>The DarkLens backend is not running.</b></p>
+    <p>Start it in PowerShell from the project folder:</p>
+    <code>.venv\Scripts\Activate.ps1<br>uvicorn backend.main:app --port 8000</code>
+    <p>Then click <b>Re-scan</b>.</p>
+  </section>
+
+  <section id="summary" class="hidden">
+    <div class="score"><span id="score">-</span><small>/100 trust score</small></div>
+    <div id="pageinfo" class="muted"></div>
+  </section>
+
+  <div class="actions">
+    <button id="fixAll" class="primary">Fix all</button>
+    <button id="rescan">Re-scan</button>
+    <button id="download" title="Download the PageSnapshot JSON (to validate it in Python)">Debug: snapshot</button>
+  </div>
+
+  <ul id="findings"></ul>
+  <p id="empty" class="muted hidden">No dark patterns found on this page. 🎉</p>
+
+  <script src="popup.js"></script>
+</body>
+</html>

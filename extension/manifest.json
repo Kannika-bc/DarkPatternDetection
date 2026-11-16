@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "DarkLens",
+  "version": "1.0.0",
+  "description": "Highlights dark patterns (CCPA 2023) on the page you are viewing. Analysis runs on your own computer (localhost).",
+  "permissions": ["storage"],
+  "host_permissions": ["http://localhost:8000/*", "http://127.0.0.1:8000/*"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup/popup.html", "default_title": "DarkLens" },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content/collector.js", "content/main.js"],
+      "css": ["content/highlight.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
