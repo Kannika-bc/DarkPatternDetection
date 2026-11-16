@@ -32,10 +32,11 @@ class TextClassifier(Protocol):
 
 
 # ML dataset categories -> our pattern types
+# Only the narrow, well-defined categories are mapped to one pattern type. "Misdirection" and
+# "Obstruction" cover several CCPA patterns, so ML-only hits there are reported as generic
+# "suspicious wording" (with the category in the explanation) instead of guessing a CCPA number.
 CATEGORY_TO_TYPE = {
     "urgency": "FALSE_URGENCY", "scarcity": "FAKE_SCARCITY", "social proof": "FAKE_SOCIAL_PROOF",
-    "misdirection": "CONFIRM_SHAMING", "obstruction": "SUBSCRIPTION_TRAP", "sneaking": "BASKET_SNEAKING",
-    "forced action": "FORCED_ACTION",
 }
 
 
@@ -49,6 +50,10 @@ def _dedupe(detections: list[Detection]) -> list[Detection]:
             same_el = d.element_id is not None and d.element_id == k.element_id
             overlap = d.text and k.text and (d.text in k.text or k.text in d.text)
             if same_el or overlap:
+                # Keep the strongest status/confidence, but show the more informative (longer) evidence,
+                # e.g. "Lightning deal ends in 14:55" instead of just the timer "14:55".
+                if len(d.text) > len(k.text):
+                    k.text, k.element_id = d.text, d.element_id or k.element_id
                 if d.note and d.note not in k.note:
                     k.note = (k.note + " " + d.note).strip()
                 duplicate = True
@@ -81,7 +86,8 @@ def _apply_ml(detections: list[Detection], snapshot: PageSnapshot, clf: Optional
             for (seg, prob), cat in zip(sure, cats):
                 ptype = CATEGORY_TO_TYPE.get((cat or "").lower(), "ML_SUSPICIOUS_TEXT")
                 detections.append(Detection(ptype, seg.text, seg.id, round(prob * 0.8, 3), source="ml",
-                                            note=f"Flagged by the ML text classifier ({prob:.0%} sure)."))
+                                            note=f"Flagged by the ML text classifier ({prob:.0%} sure, "
+                                                 f"category: {cat or 'unknown'})."))
     return detections
 
 

@@ -20,4 +20,5 @@ chromadb>=0.5
 streamlit>=1.33
 matplotlib>=3.8
 jsonschema>=4.21
+pypdf>=4.0
 pytest>=8.0

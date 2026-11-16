@@ -1,0 +1,97 @@
+{
+  "source": "Summary in our own words of the Central Consumer Protection Authority (CCPA), India: 'Guidelines for Prevention and Regulation of Dark Patterns, 2023' (notified 30 November 2023 under the Consumer Protection Act, 2019). Not legal advice; consult the official text for exact wording.",
+  "general": [
+    {
+      "title": "What the guidelines cover",
+      "text": "The guidelines define a dark pattern as any practice or deceptive design pattern in a user interface or user experience on a platform that misleads or tricks users into doing something they did not originally intend or want to do, by subverting or impairing consumer autonomy, decision making or choice. Such practices amount to misleading advertisements, unfair trade practices or violations of consumer rights."
+    },
+    {
+      "title": "Who must comply",
+      "text": "The guidelines apply to all platforms that systematically offer goods or services in India, and also to advertisers and sellers. No person or platform may engage in any dark pattern practice. Annexure 1 of the guidelines lists thirteen specified dark patterns with illustrations; the list is not exhaustive."
+    },
+    {
+      "title": "Consumer remedies",
+      "text": "A consumer who meets a dark pattern can complain through the National Consumer Helpline (dial 1915 or the NCH app/website) or the e-Daakhil consumer commission portal. The CCPA can investigate, order discontinuation of the practice and impose penalties under the Consumer Protection Act, 2019."
+    }
+  ],
+  "patterns": [
+    {
+      "number": 1, "name": "False Urgency",
+      "definition": "Falsely stating or implying a sense of urgency or scarcity to mislead a user into making an immediate purchase or taking immediate action.",
+      "examples": ["Showing false popularity such as 'only 2 rooms left, 30 others are looking' when this is not true", "Presenting a sale as exclusive or time-limited when it is not", "A countdown timer that restarts whenever the page is reloaded"],
+      "prohibited": "Creating artificial time pressure or invented scarcity. Genuine, verifiable deadlines and stock levels are allowed."
+    },
+    {
+      "number": 2, "name": "Basket Sneaking",
+      "definition": "Including additional items such as products, services, payments to charity or donations at checkout without the consent of the user, so the total amount payable is more than the amount for the product or service the user chose.",
+      "examples": ["Automatically adding travel insurance or an extended warranty to the cart", "A pre-ticked donation or charity contribution added to the bill", "Adding a paid subscription along with a purchase"],
+      "prohibited": "Adding anything to the basket that the user did not actively choose. Free complementary items and necessary fees disclosed at the time of purchase are not basket sneaking."
+    },
+    {
+      "number": 3, "name": "Confirm Shaming",
+      "definition": "Using a phrase, video, audio or other means to create a sense of fear, shame, ridicule or guilt in the mind of the user, so as to nudge the user into a certain action that results in purchasing a product or service or continuing a subscription.",
+      "examples": ["'No thanks, I prefer paying full price'", "'I will stay unsecured' on a travel insurance decline button", "'Cancel anyway, I don't care about my favourite shows'"],
+      "prohibited": "Guilt-tripping or shaming wording on the option that declines. A neutral 'No thanks' is fine."
+    },
+    {
+      "number": 4, "name": "Forced Action",
+      "definition": "Forcing a user into taking an action that would require the user to buy any additional good or service, subscribe or sign up for an unrelated service, or share personal information in order to buy or subscribe to the product or service originally intended.",
+      "examples": ["Requiring the user to download an app to continue using a service originally offered on the website", "Requiring a newsletter subscription or account creation to read content or complete a purchase", "Forcing users to share contacts or social media access"],
+      "prohibited": "Making an unrelated action a condition for getting what the user came for."
+    },
+    {
+      "number": 5, "name": "Subscription Trap",
+      "definition": "Making cancellation of a paid subscription impossible or a complex and lengthy process; hiding the cancellation option; forcing the user to provide payment details or authorisation for auto-debits to avail a free subscription; or making cancellation instructions ambiguous, latent or confusing.",
+      "examples": ["Cancellation possible only by phone in a narrow time window", "No visible cancel option in the account page", "Requiring card details and auto-debit permission for a 'free' trial"],
+      "prohibited": "Cancelling must be as easy as signing up; instructions must be clear."
+    },
+    {
+      "number": 6, "name": "Interface Interference",
+      "definition": "A design element that manipulates the user interface in ways that highlight certain specific information and obscure other relevant information relative to the other information, to misdirect a user from taking an action they desire.",
+      "examples": ["A huge bright 'Accept' button next to a tiny grey 'reject' link", "A close (X) icon that is barely visible", "Using a confusing colour so that 'Yes' looks like 'No'"],
+      "prohibited": "Visually hiding or downplaying the option the user may want. Choices should be presented with comparable prominence."
+    },
+    {
+      "number": 7, "name": "Bait and Switch",
+      "definition": "Deliberately advertising a particular outcome based on the user's action but deceptively serving an alternate outcome.",
+      "examples": ["A product is advertised at a low price, but at checkout the seller says it is unavailable and offers a costlier one", "The price shown on the product page is lower than the price in the cart"],
+      "prohibited": "Changing the advertised offer, product or price after the user acts on it."
+    },
+    {
+      "number": 8, "name": "Drip Pricing",
+      "definition": "Elements of prices are not revealed upfront or are revealed surreptitiously within the user experience; the price is revealed only after confirmation of purchase so that a higher amount is charged; a product is advertised as free without disclosing that in-app purchases are needed to continue; or the user is prevented from using a service already paid for unless something more is bought.",
+      "examples": ["Platform, convenience, packaging or handling fees shown only at checkout", "A ticket price that grows with booking fees on the last page"],
+      "prohibited": "Hiding mandatory charges until late in the purchase. The full price should be shown upfront."
+    },
+    {
+      "number": 9, "name": "Disguised Advertisement",
+      "definition": "Posting, or causing to be posted, advertisements disguised as other types of content such as user-generated content, news articles or false advertisements designed to blend in with the rest of the interface to trick customers into clicking on them.",
+      "examples": ["A sponsored article styled exactly like a news story with a tiny 'Ad' label", "Paid promotions presented as genuine user reviews"],
+      "prohibited": "Advertisements must be clearly disclosed as advertisements. Responsibility lies with the seller or advertiser who posts them."
+    },
+    {
+      "number": 10, "name": "Nagging",
+      "definition": "A dark pattern in which a user is disrupted and annoyed by repeated and persistent interactions, in the form of requests, information, options or interruptions, to effectuate a transaction and make commercial gains, unless specifically permitted by the user.",
+      "examples": ["A 'rate us' or 'allow notifications' popup that keeps coming back with only a 'Maybe later' option", "Repeatedly asking for a phone number or to download the app"],
+      "prohibited": "Persistent requests the user has not agreed to. A user should be able to say no permanently."
+    },
+    {
+      "number": 11, "name": "Trick Question",
+      "definition": "The deliberate use of confusing or vague language, such as confusing wording, double negatives or similar tricks, to misguide or misdirect a user from taking the desired action or to lead the consumer to a specific response.",
+      "examples": ["'Uncheck this box if you do not wish to not receive offers'", "'Tick here if you would prefer not to opt out of SMS updates'"],
+      "prohibited": "Consent questions must be clear and unambiguous."
+    },
+    {
+      "number": 12, "name": "SaaS Billing",
+      "definition": "The process of generating and collecting payments from consumers on a recurring basis in a software-as-a-service business model by exploiting positive acquisition loops in recurring subscriptions to get money from users as surreptitiously as possible.",
+      "examples": ["A free trial that converts silently into a paid plan without informing the user", "Charging for features or seats the user does not use", "Auto-renewal turned on by default without a clear reminder"],
+      "prohibited": "Silent conversion and hidden recurring charges. Users should be informed before they are charged."
+    },
+    {
+      "number": 13, "name": "Rogue Malware",
+      "definition": "Using ransomware or scareware to mislead or trick a user into believing there is a virus on their computer, to convince them to pay for a fake malware removal tool that actually installs malware.",
+      "examples": ["A popup claiming 'Your phone is infected, buy this cleaner now'"],
+      "prohibited": "Scare tactics and fake security warnings. (Out of scope for DarkLens.)"
+    }
+  ]
+}
