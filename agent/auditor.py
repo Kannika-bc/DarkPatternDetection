@@ -270,17 +270,17 @@ class Auditor:
         r.trust_score = trust_score(r.findings)
         refs: list[CcpaReference] = []
         try:
-            from rag.ccpa_rag import ccpa_lookup
+            from rag.ccpa_rag import pattern_passage
 
             for ptype in sorted({f.type for f in r.findings}):
                 info = info_for(ptype)
                 number = info.ccpa_ref or info.related
-                if not number:  # e.g. generic ML "suspicious wording": no CCPA pattern to cite
-                    continue
-                query = f"{CCPA_NAMES.get(number, info.name)}: {info.name}"
-                hits = [h for h in ccpa_lookup(query, k=4) if h["pattern"] == number] or ccpa_lookup(query, k=1)
-                if hits and all(x.pattern != hits[0]["pattern"] for x in refs):
-                    refs.append(CcpaReference(pattern=hits[0]["pattern"], name=hits[0]["name"], passage=hits[0]["text"]))
+                if not number or any(x.pattern == number for x in refs):
+                    continue  # generic ML findings have no CCPA pattern; one passage per pattern
+                hit = pattern_passage(number, f"{CCPA_NAMES[number]}: {info.name} {info.explanation}")
+                if hit:
+                    refs.append(CcpaReference(pattern=number, name=CCPA_NAMES[number], passage=hit["text"],
+                                              source=hit["source"]))
         except Exception as exc:
             self.tools._log(f"RAG lookup failed: {exc}")
         r.ccpa_references = refs

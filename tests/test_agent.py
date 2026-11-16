@@ -36,6 +36,18 @@ def test_ccpa_lookup_finds_drip_pricing():
     assert hits and hits[0]["pattern"] == 8
 
 
+def test_pdf_text_is_split_at_pattern_definitions():
+    from rag.ccpa_rag import _pattern_sections
+
+    text = ("Preamble about the guidelines. 1. “False Urgency” means falsely stating urgency. "
+            "2. “Basket sneaking” means adding items without consent. "
+            "8. “Drip pricing” means elements of price are not revealed upfront. Closing remarks.")
+    names = {"false urgency": 1, "basket sneaking": 2, "drip pricing": 8}
+    sections = _pattern_sections(text, names)
+    assert [s[0] for s in sections][:4] == [0, 1, 2, 8]
+    assert sections[3][2].startswith("8. “Drip pricing”")
+
+
 @pytest.fixture(scope="module")
 def base_url():
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(SITE))

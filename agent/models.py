@@ -37,6 +37,7 @@ class CcpaReference(BaseModel):
     pattern: int
     name: str
     passage: str
+    source: str = "summary"  # "summary" (our JSON) or the guideline PDF's file name
 
 
 class AuditReport(BaseModel):

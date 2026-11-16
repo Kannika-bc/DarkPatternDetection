@@ -69,16 +69,52 @@ def _pdf_chunks(name_to_number: dict[str, int]) -> list[dict]:
     out: list[dict] = []
     for pdf in pdfs:
         text = re.sub(r"\s+", " ", " ".join(page.extract_text() or "" for page in PdfReader(pdf).pages))
-        start, n = 0, 0
-        while start < len(text):
-            piece = text[start:start + CHUNK_CHARS]
-            mentioned = [num for name, num in name_to_number.items() if name in piece.lower()]
-            out.append({"id": f"{pdf.stem}-{n}", "text": piece, "pattern": mentioned[0] if mentioned else 0,
-                        "name": pdf.stem, "source": pdf.name})
-            start += CHUNK_CHARS - CHUNK_OVERLAP
-            n += 1
+        for number, name, section in _pattern_sections(text, name_to_number):
+            for n, piece in enumerate(_windows(section)):
+                out.append({"id": f"{pdf.stem}-p{number}-{n}-{len(out)}", "text": piece, "pattern": number,
+                            "name": name, "source": pdf.name})
     print(f"[rag] ingested {len(out)} chunks from {len(pdfs)} PDF(s)")
     return out
+
+
+# Annexure 1 defines each pattern as:  8. "Drip pricing" means ...
+_HEADING = re.compile(r"\b(\d{1,2})\.\s*[“\"]([^”\"]{3,40})[”\"]\s*(?:means|refers)", re.IGNORECASE)
+
+
+def _pattern_sections(text: str, name_to_number: dict[str, int]) -> list[tuple[int, str, str]]:
+    """Split the guideline text at the numbered pattern definitions.
+
+    Returns (pattern number, name, section text). Text before the first definition and after the
+    last one is general (pattern 0). Every chunk of a section keeps that section's pattern number,
+    which is far more reliable than guessing from words that happen to appear in a chunk.
+    """
+    heads = []
+    for m in _HEADING.finditer(text):
+        name = m.group(2).strip().rstrip("s").lower()  # "Rogue Malwares" -> "rogue malware"
+        number = name_to_number.get(name)
+        if number == int(m.group(1)):  # the number must agree with the name
+            heads.append((m.start(), number, m.group(2).strip()))
+    if not heads:  # unknown layout: one general section
+        return [(0, "CCPA guidelines", text)]
+    sections = [(0, "CCPA guidelines (general)", text[:heads[0][0]])]
+    for i, (start, number, name) in enumerate(heads):
+        end = heads[i + 1][0] if i + 1 < len(heads) else len(text)
+        body = text[start:end]
+        if number == heads[-1][1]:
+            # After the last definition the document continues with general text: keep only the
+            # definition paragraph (up to the first blank-ish break of ~1200 chars) for the pattern.
+            sections.append((number, name, body[:1200]))
+            sections.append((0, "CCPA guidelines (general)", body[1200:]))
+        else:
+            sections.append((number, name, body))
+    return [s for s in sections if s[2].strip()]
+
+
+def _windows(text: str) -> list[str]:
+    """Cut long text into overlapping ~800-character windows."""
+    if len(text) <= CHUNK_CHARS:
+        return [text]
+    return [text[i:i + CHUNK_CHARS] for i in range(0, len(text), CHUNK_CHARS - CHUNK_OVERLAP)]
 
 
 @lru_cache(maxsize=1)
@@ -122,10 +158,17 @@ def ccpa_lookup(query: str, k: int = 3) -> list[dict]:
                               include=["documents", "metadatas", "embeddings"])
     # Vectors are normalised, so the dot product is the cosine similarity (1 = same meaning).
     return [
-        {"pattern": meta["pattern"], "name": meta["name"], "text": doc,
+        {"pattern": meta["pattern"], "name": meta["name"], "text": doc, "source": meta["source"],
          "score": round(float(sum(a * b for a, b in zip(q, emb))), 3)}
         for doc, meta, emb in zip(res["documents"][0], res["metadatas"][0], res["embeddings"][0])
     ]
+
+
+def pattern_passage(number: int, query: str) -> dict | None:
+    """Best passage for one CCPA pattern, preferring the official guideline text (PDF) over our summary."""
+    hits = [h for h in ccpa_lookup(query, k=12) if h["pattern"] == number]
+    official = [h for h in hits if h["source"].lower().endswith(".pdf")]
+    return (official or hits or [None])[0]
 
 
 def main() -> None:

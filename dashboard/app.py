@@ -102,7 +102,8 @@ def page_audit() -> None:
     if report.ccpa_references:
         st.subheader("CCPA references (retrieved with RAG)")
         for ref in report.ccpa_references:
-            st.markdown(f"**Pattern {ref.pattern}: {ref.name}**: {ref.passage}")
+            origin = "official guidelines" if ref.source.lower().endswith(".pdf") else "DarkLens summary"
+            st.markdown(f"**Pattern {ref.pattern}: {ref.name}** _({origin})_: {ref.passage}")
     st.download_button("Download report (JSON)", report.model_dump_json(indent=2), "darklens-audit.json")
 
 
